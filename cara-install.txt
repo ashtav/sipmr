@@ -1,0 +1,5 @@
+1. Buka terminal atau gitbash
+2. cari tempat untuk menaruh project
+3. Ketik, composer create-project --prefer-dist laravel/laravel sipmr "5.8.*"
+4. Tunggu hingga selesai
+5. Selesai
