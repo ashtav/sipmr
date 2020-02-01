@@ -15,6 +15,30 @@
     right: 30px;
     opacity: 0;
   }
+
+  #imgPreview{
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    left: 0; top: 0;
+    height: 100%; width: 100%;
+    z-index: 9999;
+  }
+
+  #imgPreview img{
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px; max-height: 500px;
+    object-fit: cover
+  }
+
+  #imgPreview #info{
+    color: #fff;
+    position: absolute;
+    left: 50%; bottom: 20px;
+    transform: translate(-50%, 0%);
+
+  }
 </style>
 
 <div class="wrapper">
@@ -51,7 +75,7 @@
                   <button class="btn btn-sm btn-secondary" onclick="_edit({{$item}})"> <i class="fa fa-pencil"></i></button>
                   <button class="btn btn-sm btn-danger" onclick="_delete({{$item->id}})"><i class="fa fa-trash"></i></button>
                 </div>
-                <img src="{{asset('public/images/'.$item->filename)}}" alt="" style="object-fit: cover; height: 250px; width: 100%; padding: 3px; background: #fff">
+                <img src="{{asset('public/images/'.$item->filename)}}" alt="" onclick="_view({{$item}})" style="object-fit: cover; height: 250px; width: 100%; padding: 3px; background: #fff">
               </div>
               @endforeach
                 
@@ -61,6 +85,12 @@
       </div>
       <!-- /.row -->
     </section>
+
+    <div id="imgPreview" onclick="$('#imgPreview').fadeOut(300)" style="display: none">
+      <img src="{{asset('public/images/1580488358.jpg')}}" alt="">
+      <div id="info">lorem ipsum dolor set amet consecttur lorem isum</div>
+    </div>
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -148,17 +178,11 @@
       }
     }
 
-    $(function () {
-      $('#example2').DataTable()
-      $('#example1').DataTable({
-        'paging'      : true,
-        'lengthChange': false,
-        'searching'   : true,
-        'ordering'    : false,
-        'info'        : true,
-        'autoWidth'   : false
-      })
-    })
+    function _view(data){
+      $('#imgPreview').fadeIn(300);
+      $('#imgPreview img').attr('src', url('public/images/'+data.filename))
+      $('#imgPreview #info').html(data.info)
+    }
   </script>
 </body>
 </html>

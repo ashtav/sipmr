@@ -5,18 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
-use App\Models\Gallery;
+use App\Models\Pengumuman;
 
-class GalleryController extends Controller
+class PengumumanController extends Controller
 {
-    public function __construct()
-    {
-        $this->user = Auth::user();
-    }
 
     public function index(){
-        $gallery = Gallery::latest()->get();
-        return view('admin.gallery', compact('gallery'));
+        $pengumuman = Pengumuman::latest()->get();
+        return view('admin.pengumuman', compact('pengumuman'));
     }
 
     public function store(Request $request){
@@ -28,17 +24,15 @@ class GalleryController extends Controller
             ], 400);
         }
 
-        $imageName = time().'.'.request()->filename->getClientOriginalExtension();
-        request()->filename->move(public_path('images'), $imageName);
-
         $input = $request->except(['id']);
-        $input['filename'] = $imageName;
+        $input['judul'] = ucwords($request->judul);
+        $input['dilihat'] = $user->id;
 
         try {
-            Gallery::create($input);
+            Pengumuman::create($input);
            
             return response()->json([
-                'message' => 'Foto baru berhasil ditambahkan.',
+                'message' => 'Pengumuman baru berhasil ditambahkan.',
                 'status' => 201
             ], 201);
 
@@ -51,10 +45,10 @@ class GalleryController extends Controller
     public function update(Request $request, $id){
 
         try {
-            Gallery::find($id)->update(['info' => $request->info]);
+            Pengumuman::find($id)->update(['judul' => ucwords($request->judul), 'pengumuman' => $request->pengumuman]);
 
             return response()->json([
-                'message' => 'Foto berhasil diperbarui.',
+                'message' => 'Pengumuman berhasil diperbarui.',
                 'status' => 201
             ], 201);
 
@@ -65,13 +59,6 @@ class GalleryController extends Controller
     }
 
     public function destroy($id){
-        $img = Gallery::find($id);
-
-        $image_path = "public/images/".$img->filename;  // Value is not URL but directory file path
-        if(file_exists($image_path)) {
-            unlink($image_path);
-        }
-
-        Gallery::find($id)->delete();
+        Pengumuman::find($id)->delete();
     }
 }

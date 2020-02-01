@@ -34,6 +34,20 @@ Route::group(['middleware' => 'auth'], function () use ($router) {
         $router->put('/{id}', 'GalleryController@update');
         $router->delete('/{id}', 'GalleryController@destroy');
     });
+
+    $router->group(['prefix' => 'materi'], function () use ($router) {
+        $router->get('/', 'MateriController@index');
+        $router->post('/', 'MateriController@store');
+        $router->put('/{id}', 'MateriController@update');
+        $router->delete('/{id}', 'MateriController@destroy');
+    });
+
+    $router->group(['prefix' => 'pengumuman'], function () use ($router) {
+        $router->get('/', 'PengumumanController@index');
+        $router->post('/', 'PengumumanController@store');
+        $router->put('/{id}', 'PengumumanController@update');
+        $router->delete('/{id}', 'PengumumanController@destroy');
+    });
 });
 
 

@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\Gallery;
+use App\Models\Materi;
 
-class GalleryController extends Controller
+class MateriController extends Controller
 {
     public function __construct()
     {
@@ -15,8 +16,8 @@ class GalleryController extends Controller
     }
 
     public function index(){
-        $gallery = Gallery::latest()->get();
-        return view('admin.gallery', compact('gallery'));
+        $materi = Materi::latest()->get();
+        return view('admin.materi', compact('materi'));
     }
 
     public function store(Request $request){
@@ -29,16 +30,16 @@ class GalleryController extends Controller
         }
 
         $imageName = time().'.'.request()->filename->getClientOriginalExtension();
-        request()->filename->move(public_path('images'), $imageName);
+        request()->filename->move(public_path('files'), $imageName);
 
         $input = $request->except(['id']);
         $input['filename'] = $imageName;
 
         try {
-            Gallery::create($input);
+            Materi::create($input);
            
             return response()->json([
-                'message' => 'Foto baru berhasil ditambahkan.',
+                'message' => 'Materi baru berhasil ditambahkan.',
                 'status' => 201
             ], 201);
 
@@ -51,10 +52,10 @@ class GalleryController extends Controller
     public function update(Request $request, $id){
 
         try {
-            Gallery::find($id)->update(['info' => $request->info]);
+            Materi::find($id)->update(['info' => $request->info]);
 
             return response()->json([
-                'message' => 'Foto berhasil diperbarui.',
+                'message' => 'Materi berhasil diperbarui.',
                 'status' => 201
             ], 201);
 
@@ -65,13 +66,13 @@ class GalleryController extends Controller
     }
 
     public function destroy($id){
-        $img = Gallery::find($id);
+        $file = Materi::find($id);
 
-        $image_path = "public/images/".$img->filename;  // Value is not URL but directory file path
-        if(file_exists($image_path)) {
-            unlink($image_path);
+        $path = "public/files/".$file->filename;  // Value is not URL but directory file path
+        if(file_exists($path)) {
+            unlink($path);
         }
 
-        Gallery::find($id)->delete();
+        Materi::find($id)->delete();
     }
 }
