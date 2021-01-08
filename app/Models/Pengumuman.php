@@ -18,6 +18,7 @@ class Pengumuman extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'judul',
         'pengumuman',
         'dilihat',

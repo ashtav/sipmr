@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+    {{-- setiap file memiliki struktur seperti
+        
+        head : untuk memanggil library css pada folder public,
+        body: tempat diamana semua tampilan web dibuat
+        script: untuk kode javascript
+
+        adapun yang tidak memilikinya dipanggil dengan cara @include(nama file yang berisi head)
+    --}}
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -130,8 +140,8 @@
             // fungsi untuk login
             function login(f){
                 // tampilkan animasi spiner pada tombol
-                let btn = $(f).find('button:submit');
-                btn.html(spiner).prop('disabled', true);
+                // let btn = $(f).find('button:submit'), def = btn.html(); 
+                // btn.html(spiner).prop('disabled', true);
 
                 // menghubungkan ke controller, mengirim data
                 $.ajax({
@@ -143,11 +153,16 @@
                     data: new FormData($(f)[0]),
                     contentType: false,
                     processData: false,
-                    success: function(res){
-                        toast('Login berhasil');
-                        goTo('admin')
-                    }, error: function(err){
-                        alert('Error! Terjadi kesalahan')
+                    success: function(res){ console.log(res)
+                        if(res == 201){ // jika hasil == 201 (kode sukses)
+                            toast('Login berhasil');
+                            goTo('admin')
+                        }else{
+                            toast('Login gagal');
+                        }
+                    }, error: function(err){ // jika error
+                        toast('Login gagal');
+                        console.log(err)
                     }
                 })
 

@@ -34,6 +34,7 @@ class MateriController extends Controller
 
         $input = $request->except(['id']);
         $input['filename'] = $imageName;
+        $input['user_id'] = $user->id();
 
         try {
             Materi::create($input);

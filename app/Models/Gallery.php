@@ -10,7 +10,7 @@ class Gallery extends Model
 {
 
     // protected $primaryKey = 'user_id';
-    protected $table = 'gallery';
+    protected $table = 'galeri';
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +18,7 @@ class Gallery extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'filename',
         'info'
     ];

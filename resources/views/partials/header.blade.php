@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <meta name="url" content="http://localhost:85/sipmr" />
+  <meta name="url" content="http://localhost:8888/sipmr" />
   
   <title>SIPMR | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->

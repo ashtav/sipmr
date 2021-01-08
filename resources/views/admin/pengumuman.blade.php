@@ -23,10 +23,10 @@
         <li class="active">Pengumuman</li>
       </ol>
     </section>
-
+    @if ($me->role == 'admin')
     <div style="padding: 15px 15px 0 15px" class="text-right">
       <button class="btn btn-primary" onclick="_new()"> <i class="fa fa-edit fa-fw"></i> Buat Pengumuman</button>
-    </div>
+    </div> @endif
 
     
     <!-- Main content -->
@@ -63,8 +63,9 @@
                       <td>
                         <div class="btn-group">
                           <button class="btn btn-sm btn-secondary" onclick="_view({{$item}})"> <i class="fa fa-eye"></i> </button>
+                          @if ($me->role == 'admin')
                           <button class="btn btn-sm btn-secondary" onclick="_edit({{$item}})"> <i class="fa fa-pencil"></i> </button>
-                          <button class="btn btn-sm btn-danger" onclick="_delete({{$item->id}})"> <i class="fa fa-trash"></i> </button>
+                          <button class="btn btn-sm btn-danger" onclick="_delete({{$item->id}})"> <i class="fa fa-trash"></i> </button> @endif
                         </div>
                       </td>
                     </tr>
@@ -195,6 +196,17 @@
         })
       }
     }
+
+    $(function () {
+      $('#example1').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : true,
+        'ordering'    : false,
+        'info'        : true,
+        'autoWidth'   : false
+      })
+    })
 
   </script>
 </body>

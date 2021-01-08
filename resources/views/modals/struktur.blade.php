@@ -8,7 +8,13 @@
         </button>
       </div>
       <div class="modal-body">
-          <img style="object-fit: cover; width: 100%" src="http://pembiayaan.pu.go.id/datamining/ckfinder/userfiles/images/struktur%20organisasi%20desember%20new.png" alt="">
+        
+        @if ($content->img_struktur != null)
+        <img style="width: 100%; margin-bottom: 15px" src="{{$content->img_struktur == null ? asset('public/assets/images/placeholder.png') : asset('public/images/'.$content->img_struktur)}}" alt="">
+        @endif
+
+
+        {!!$content->struktur!!}
        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

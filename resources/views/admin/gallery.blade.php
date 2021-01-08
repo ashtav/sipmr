@@ -60,9 +60,10 @@
       </ol>
     </section>
 
+    @if ($me->role == 'admin')
     <div style="padding: 15px 15px 0 15px" class="text-right">
       <button class="btn btn-primary" onclick="_new()"> <i class="fa fa-plus fa-fw"></i> Tambah Foto</button>
-    </div>
+    </div> @endif
 
     
     <!-- Main content -->
@@ -71,10 +72,11 @@
          
               @foreach ($gallery as $item)
               <div class="col-md-3 col" style="position: relative; overflow: hidden; margin-bottom: 10px">
+                @if ($me->role == 'admin')
                 <div class="btn-group g-options">
                   <button class="btn btn-sm btn-secondary" onclick="_edit({{$item}})"> <i class="fa fa-pencil"></i></button>
                   <button class="btn btn-sm btn-danger" onclick="_delete({{$item->id}})"><i class="fa fa-trash"></i></button>
-                </div>
+                </div> @endif
                 <img src="{{asset('public/images/'.$item->filename)}}" alt="" onclick="_view({{$item}})" style="object-fit: cover; height: 250px; width: 100%; padding: 3px; background: #fff">
               </div>
               @endforeach
@@ -152,9 +154,8 @@
     function _edit(data){
       mod.find('.modal-title').html('Edit Foto')
       isNew = false; uid = data.id; mod.find('.alert').html('Untuk edit, hanya bisa perbarui info')
-
-      $('#info').val(data.info)
       $('#img').attr('src', url('public/images/'+data.filename))
+      mod.find('#info').val(data.info) 
 
       mod.modal('show')
     }

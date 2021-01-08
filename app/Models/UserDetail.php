@@ -19,6 +19,7 @@ class UserDetail extends Model
         'tgl_lahir',
         'tmp_lahir',
         'jk',
+        'gol_darah',
         'agama',
         'foto',
         'telp',

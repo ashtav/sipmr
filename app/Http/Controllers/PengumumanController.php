@@ -6,12 +6,21 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\Pengumuman;
+use Illuminate\Support\Facades\DB;
 
 class PengumumanController extends Controller
 {
 
     public function index(){
         $pengumuman = Pengumuman::latest()->get();
+
+        $user = Auth::user();
+
+        foreach (Pengumuman::get() as $key => $item) {
+            $dilihat = $item->dilihat;
+            DB::table('pengumuman')->update(['dilihat' => substr_replace($dilihat, ','.$user->id, strlen($dilihat), 0)]);
+        }
+
         return view('admin.pengumuman', compact('pengumuman'));
     }
 
@@ -27,6 +36,7 @@ class PengumumanController extends Controller
         $input = $request->except(['id']);
         $input['judul'] = ucwords($request->judul);
         $input['dilihat'] = $user->id;
+        $input['user_id'] = $user->id;
 
         try {
             Pengumuman::create($input);

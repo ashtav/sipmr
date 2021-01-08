@@ -19,10 +19,10 @@
         <li class="active">Materi</li>
       </ol>
     </section>
-
+    @if ($me->role == 'admin')
     <div style="padding: 15px 15px 0 15px" class="text-right">
       <button class="btn btn-primary" onclick="_new()"> <i class="fa fa-upload fa-fw"></i> Upload Materi</button>
-    </div>
+    </div> @endif
 
     
     <!-- Main content -->
@@ -55,8 +55,10 @@
                       <td>
                         <div class="btn-group">
                           <a href="{{asset('public/files/'.$item->filename)}}" target="_blank" class="btn btn-sm btn-secondary"> <i class="fa fa-download"></i> </a>
+                          @if ($me->role == 'admin')
                           <button class="btn btn-sm btn-secondary" onclick="_edit({{$item}})"> <i class="fa fa-pencil"></i> </button>
                           <button class="btn btn-sm btn-danger" onclick="_delete({{$item->id}})"> <i class="fa fa-trash"></i> </button>
+                          @endif
                         </div>
                       </td>
                     </tr>
@@ -166,6 +168,17 @@
         })
       }
     }
+
+    $(function () {
+      $('#example1').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : true,
+        'ordering'    : false,
+        'info'        : true,
+        'autoWidth'   : false
+      })
+    })
 
   </script>
 </body>

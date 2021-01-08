@@ -18,6 +18,7 @@ class CreateUserDetailsTable extends Migration
             $table->date('tgl_lahir');
             $table->string('tmp_lahir');
             $table->enum('jk',['laki-laki','perempuan'])->default('laki-laki');
+            $table->enum('gold_darah',['A','AB','B','O'])->nullable();
             $table->enum('agama',['buddha','hindu','islam','katolik','konghucu','kristen','none'])->nullable();
             $table->string('foto')->nullable();
             $table->string('telp');

@@ -33,6 +33,7 @@ class GalleryController extends Controller
 
         $input = $request->except(['id']);
         $input['filename'] = $imageName;
+        $input['user_id'] = $user->id();
 
         try {
             Gallery::create($input);

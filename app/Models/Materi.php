@@ -18,6 +18,7 @@ class Materi extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'filename',
         'info'
     ];

@@ -40,6 +40,23 @@
             </div>
           </div>
 
+          <div class="form-group" id="igd">
+            <label for="" class="form-label">Golongan Darah</label>
+
+            <div class="radio" style="margin: 0">
+              @php
+                  $gol = ['A','AB','B','O'];
+              @endphp
+              @for ($i = 0; $i < count($gol); $i++)
+                <label style="margin-right: 15px" for="g{{$i}}">
+                <input type="radio" name="gol_darah" id="g{{$i}}" value="{{$gol[$i]}}">
+                  {{$gol[$i]}}
+                </label>
+              @endfor
+              
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="" class="form-label">Agama</label>
             <select name="agama" class="form-control" id="i5">
@@ -68,7 +85,7 @@
             <input type="email" class="form-control" id="i8" name="email" required placeholder="Alamat email" autocomplete="off">
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="pass">
             <label for="" class="form-label">Password</label>
             <input type="password" class="form-control" id="i9" name="password" required placeholder="Password" autocomplete="off">
           </div>

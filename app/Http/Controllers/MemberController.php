@@ -15,7 +15,7 @@ class MemberController extends Controller
     }
 
     public function index(){
-        $users = User::with('user_detail')->orderBy('name')->latest()->get();
+        $users = User::with('user_detail')->latest()->get();
         return view('admin.member', compact('users'));
     }
 
@@ -60,10 +60,16 @@ class MemberController extends Controller
         $this->validate($request, [
             'email' => 'required|email|max:190|unique:users,email,' . $id,
         ]);
-
-        $input = $request->except(['id','updated_at']);
-        $input['name'] = ucwords($input['name']);
         
+        if(!isset($request->change_pass)){
+            $input = $request->except(['id','updated_at','password']);
+            $input['password'] = $user->password;
+        }else{
+            $input = $request->except(['id','updated_at']);
+            $input['password'] = app('hash')->make($request->password);
+        }
+        
+        $input['name'] = ucwords($input['name']);
 
         try {
             $user->update($input);
@@ -88,5 +94,10 @@ class MemberController extends Controller
 
     public function destroy($id){
         User::find($id)->delete();
+    }
+
+    public function activate($id){
+        $user = User::find($id);
+        $user->update(['status' => $user->status == 'aktif' ? 'non_aktif' : 'aktif']);
     }
 }
